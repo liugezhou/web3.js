@@ -145,7 +145,7 @@ contract.deploy({
 
 **调用合约函数**  
 
-调用智能合约读(view,pure)函数时，一般使用call   
+调用智能合约读(view,pure)函数时，一般使用call，无收费   
 `myContract.methods.myMethod([param1 [,p2]]).call(options [,defaultBlock] [,callback])`   
 - myMethod为合约中的方法名    
 - params1 为函数的参数    
@@ -154,5 +154,33 @@ contract.deploy({
     - gasPrice:String 可选，交易的每个Gas的价格
     - gas：Number可选，交易的Gas限制  
 
+调用智能合约写函数：相当于发送了交易    
+`MyContract.methods.myMethod([params [,param2]]).send(options [,callback])`   
+- options参数说明：
+    - from:String 可选 调用交易的地址  
+    - gasPrice:String 可选，交易的每个Gas的价格
+    - gas：Number可选，交易的Gas限制  
+- 返回的结果触发事件：  
+    - transactionHash: string，发送交易且得到交易哈希值后立即触发 
+    - receipt：object。以事件名称为键，以事件本身为属性值的 events
+    - confirmation：number。触发时第一个参数为接收到的确认数，第二个参数为收到交易数据  
+    - error：交易发生过程中出错时触发
+
 **调用合约事件**
 
+`MyContract.methods.emitEvent("eventName").send(options [,callback])`
+
+**执行事件查询**  
+
+区块链是由一个个区块组成的列表，这些块的内容基本上是交易记录。  
+每个交易都有一个交易日志，事件结果存放在交易日志里。  
+合约发出的事件可以使用合约地址访问  
+`MyContract.getPassEvents(event [,options] [,callback])`  
+- event: 'AllEvents' //获取全部事件 
+
+### Web.js应用案例    
+[详细内容](./demo/readme.md)   
+**简单创建投票DApp**    
+**创建合约**    
+**部署合约**    
+**网页交互**    

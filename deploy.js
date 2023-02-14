@@ -21,7 +21,7 @@ const ABI = JSON.parse(
 //     {
 //       from: '0xE8e555DdCd9687Bb31983719D396Fd19891915dB',
 //       gas: 1500000,
-//       gasPrice: '120854239', //这个数据有点问题 
+//       gasPrice: '120854239', //这个数据有点问题
 //     },
 //     function (err, result) {
 //       log(err)
@@ -30,11 +30,20 @@ const ABI = JSON.parse(
 //   )
 
 // js部署完毕后的合约查看
-let ContractAddress = "0xf3A0BFDe3352a94Ae76c5139Aad7Ab4E631D8daA"
-let MyContract = new web3.eth.Contract(ABI,ContractAddress)
+let ContractAddress = '0xf3A0BFDe3352a94Ae76c5139Aad7Ab4E631D8daA'
+let MyContract = new web3.eth.Contract(ABI, ContractAddress)
 // log(MyContract.options.address) //合约的地址信息
 
-MyContract.methods.getBalance("0x1477F7232e2238c5875467705f1862FeA8ed520c").call((err,result)=>{
-  log(err)
-  log(result)
-})
+// MyContract.methods.getBalance("0x1477F7232e2238c5875467705f1862FeA8ed520c").call((err,result)=>{
+//   log(err)
+//   log(result)
+// })
+
+MyContract.getPastEvents(
+  'AllEvents',
+  { fromBlock: 0, toBlock: 'latest' },
+  (err, result) => {
+    log(err)
+    log(result)
+  }
+)
